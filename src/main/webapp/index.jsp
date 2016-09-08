@@ -1,7 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=urf-8">
@@ -36,10 +36,10 @@
 	<br>
 	<br>
 	<p>
-		<a href="${pageContext.request.contextPath}/JobProcessServlet?jobtype=100&action=query">调度任务监控管理</a>
+		<a href="${ctx}/JobProcessServlet?jobtype=100&action=query">调度任务监控管理</a>
 	</p>
 
-	<form id="myForm1" action="${pageContext.request.contextPath}/JobProcessServlet?jobtype=0&action=add" method="post">
+	<form id="myForm1" action="${ctx}/JobProcessServlet?jobtype=0&action=add" method="post">
 		<table>
 			<tr>
 				<th colspan="3" bgcolor="00ff00"><b>Simple Trigger</b></th>
@@ -103,7 +103,7 @@
 
 	<br>
 
-	<form id="myForm2" action="${pageContext.request.contextPath}/JobProcessServlet?jobtype=1&action=add" method="post">
+	<form id="myForm2" action="${ctx}/JobProcessServlet?jobtype=1&action=add" method="post">
 		<table>
 			<tr>
 				<th colspan="3" bgcolor="00ff00"><b>Cron Trigger 1</b></th>
@@ -126,7 +126,7 @@
 
 	<br>
 
-	<form id="myForm3" action="${pageContext.request.contextPath}/JobProcessServlet?jobtype=2&action=add" method="post">
+	<form id="myForm3" action="${ctx}/JobProcessServlet?jobtype=2&action=add" method="post">
 		<table>
 			<tr>
 				<th colspan="4" bgcolor="00ff00" widthd="100%"><b>Cron Trigger 2</b></th>
