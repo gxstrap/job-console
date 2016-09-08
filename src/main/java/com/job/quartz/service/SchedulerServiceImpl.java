@@ -1,4 +1,4 @@
-package com.sundoctor.quartz.service;
+package com.job.quartz.service;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -20,8 +20,8 @@ import org.quartz.impl.triggers.SimpleTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sundoctor.example.Constant;
-import com.sundoctor.quartz.dao.QuartzDao;
+import com.job.biz.Constant;
+import com.job.quartz.dao.QuartzDao;
 
 @Service("schedulerService")
 public class SchedulerServiceImpl implements SchedulerService {

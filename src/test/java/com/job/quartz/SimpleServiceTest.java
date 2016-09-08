@@ -1,4 +1,4 @@
-package com.sundoctor.example.test;
+package com.job.quartz;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sundoctor.quartz.service.SchedulerService;
+import com.job.quartz.service.SchedulerService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext.xml", "classpath*:spring/applicationContext-quartz.xml" })
@@ -35,10 +35,9 @@ public class SimpleServiceTest {
 
             Date startTime = this.parse("2016-09-08 20:55:00");
             Date endTime = this.parse("2016-09-08 21:55:00");
-            Date end = null;
             // 2009-06-01 21:50:00开始执行调度
             // schedulerService.schedule(startTime);
-            schedulerService.schedule(startTime, end);
+            schedulerService.schedule(startTime, endTime);
 
             // 2009-06-01 21:50:00开始执行调度，2009-06-01 21:55:00结束执行调试
             // schedulerService.schedule(startTime, endTime);

@@ -1,4 +1,4 @@
-package com.sundoctor.quartz.service;
+package com.job.quartz.service;
 
 import java.util.Date;
 import java.util.List;

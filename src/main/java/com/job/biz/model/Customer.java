@@ -1,4 +1,4 @@
-package com.sundoctor.example.model;
+package com.job.biz.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.sundoctor.quartz.dao;
+package com.job.quartz.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.sundoctor.example.Constant;
+import com.job.biz.Constant;
 
 @Repository("quartzDao")
 public class QuartzDao {

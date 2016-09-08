@@ -1,4 +1,4 @@
-package com.sundoctor.example.servlet;
+package com.job.biz.servlet;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -19,8 +19,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.util.WebUtils;
 
-import com.sundoctor.example.Constant;
-import com.sundoctor.quartz.service.SchedulerService;
+import com.job.biz.Constant;
+import com.job.quartz.service.SchedulerService;
 
 /**
  * Servlet implementation class JobProcessServlet

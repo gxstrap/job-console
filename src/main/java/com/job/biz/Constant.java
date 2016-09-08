@@ -1,4 +1,4 @@
-package com.sundoctor.example;
+package com.job.biz;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.sundoctor.example.service;
+package com.job.biz.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sundoctor.example.dao.CustomerDaoImpl;
+import com.job.biz.dao.CustomerDaoImpl;
 
 @Service("simpleService")
 @Transactional(readOnly = true)

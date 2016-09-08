@@ -1,4 +1,4 @@
-package com.sundoctor.example.service;
+package com.job.biz.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.DisallowConcurrentExecution;

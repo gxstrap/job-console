@@ -1,4 +1,4 @@
-package com.sundoctor.example.dao;
+package com.job.biz.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,8 +9,8 @@ import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.sundoctor.example.model.Customer;
-import com.sundoctor.example.service.SimpleService;
+import com.job.biz.model.Customer;
+import com.job.biz.service.SimpleService;
 
 @Repository("customerDao")
 public class CustomerDaoImpl extends HibernateDaoSupport {
