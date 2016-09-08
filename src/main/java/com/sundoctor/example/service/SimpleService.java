@@ -12,22 +12,21 @@ import com.sundoctor.example.dao.CustomerDaoImpl;
 @Transactional(readOnly = true)
 public class SimpleService {
 
-	private static final Logger logger = LoggerFactory.getLogger(SimpleService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleService.class);
 
-	@Autowired
-	private CustomerDaoImpl customerDao;
+    @Autowired
+    private CustomerDaoImpl customerDao;
 
-	public void testMethod(String triggerName, String group) {
-		// 这里执行定时调度业务
-		customerDao.test();
-		logger.info("AAAA:" + triggerName + "==" + group);
+    public void testMethod(String triggerName, String group) {
+        // 这里执行定时调度业务
+        customerDao.test();
+        logger.info("AAAA:" + triggerName + "==" + group);
+    }
 
-	}
-
-	public void testMethod2(String triggerName, String group) {
-		// 这里执行定时调度业务
-		customerDao.backupDateabase();
-		logger.info("BBBB:" + triggerName + "==" + group);
-	}
+    public void testMethod2(String triggerName, String group) {
+        // 这里执行定时调度业务
+        customerDao.backupDateabase();
+        logger.info("BBBB:" + triggerName + "==" + group);
+    }
 
 }

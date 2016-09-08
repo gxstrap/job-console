@@ -8,49 +8,49 @@ import javax.persistence.Id;
 @Entity
 public class Customer {
 
-	private Integer id;
-	private String name;
-	private String email;
-	private Integer age;
+    private Integer id;
+    private String name;
+    private String email;
+    private Integer age;
 
-	public Customer() {
+    public Customer() {
 
-	}
+    }
 
-	@Id
-	@GeneratedValue
-	public Integer getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getAge() {
-		return age;
-	}
+    public Integer getAge() {
+        return age;
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-	@Column(length = 100)
-	public String getEmail() {
-		return email;
-	}
+    @Column(length = 100)
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	@Column(length = 100)
-	public String getName() {
-		return name;
-	}
+    @Column(length = 100)
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

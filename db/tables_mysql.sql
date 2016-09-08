@@ -164,5 +164,13 @@ CREATE TABLE QRTZ_LOCKS
     PRIMARY KEY (SCHED_NAME,LOCK_NAME)
 );
 
+create table customer
+  (
+    id bigint(100) not null,
+    name varchar(50) not null,
+    email varchar(50) not null,
+    age bigint(13) not null,
+    primary key (id)
+);
 
 commit;
