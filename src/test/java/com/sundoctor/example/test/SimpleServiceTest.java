@@ -1,23 +1,22 @@
 package com.sundoctor.example.test;
 
-import java.util.Date;
-
-import javax.annotation.Resource;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sundoctor.quartz.service.SchedulerService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/applicationContext.xml", "classpath:spring/applicationContext-quartz.xml" })
+@ContextConfiguration(locations = { "classpath*:spring/applicationContext.xml", "classpath*:spring/applicationContext-quartz.xml" })
 public class SimpleServiceTest {
 
-    @Resource
+    @Autowired
     private SchedulerService schedulerService;
 
     public void setSchedulerService(SchedulerService schedulerService) {
@@ -34,7 +33,7 @@ public class SimpleServiceTest {
             // 每10秒中执行调试一次
             schedulerService.schedule("0/5 * * ? * * *");
 
-            Date startTime = this.parse("2016-09-08 14:21:00");
+            Date startTime = this.parse("2016-09-08 14:35:00");
             Date endTime = this.parse("2016-09-08 21:55:00");
 
             // 2009-06-01 21:50:00开始执行调度
