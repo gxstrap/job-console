@@ -30,23 +30,24 @@ public class SimpleServiceTest {
             // 执行业务逻辑...
 
             // 设置高度任务
-            // 每10秒中执行调试一次
-            schedulerService.schedule("0/5 * * ? * * *");
+            // 每2秒中执行调试一次
+            schedulerService.schedule("0/2 * * ? * * *");
 
-            Date startTime = this.parse("2016-09-08 14:35:00");
+            Date startTime = this.parse("2016-09-08 20:55:00");
             Date endTime = this.parse("2016-09-08 21:55:00");
-
+            Date end = null;
             // 2009-06-01 21:50:00开始执行调度
-            schedulerService.schedule(startTime);
+            // schedulerService.schedule(startTime);
+            schedulerService.schedule(startTime, end);
 
             // 2009-06-01 21:50:00开始执行调度，2009-06-01 21:55:00结束执行调试
-            schedulerService.schedule(startTime, endTime);
+            // schedulerService.schedule(startTime, endTime);
 
             // 2009-06-01 21:50:00开始执行调度，执行5次结束
-            schedulerService.schedule(startTime, null, 5);
+            // schedulerService.schedule(startTime, null, 5);
 
             // 2009-06-01 21:50:00开始执行调度，每隔20秒执行一次，执行5次结束
-            schedulerService.schedule(startTime, null, 5, 20);
+            // schedulerService.schedule(startTime, null, 5, 20);
 
             // 等等，查看com.sundoctor.quartz.service.SchedulerService
         } catch (Exception e) {
