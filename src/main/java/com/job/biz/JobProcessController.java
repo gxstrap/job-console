@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +23,29 @@ import com.job.common.constants.Constants;
 import com.job.quartz.service.SchedulerService;
 
 @Controller
-@RequestMapping("job")
 public class JobProcessController {
+
+    private static final Logger log = LoggerFactory.getLogger(JobProcessController.class);
 
     @Autowired
     public SchedulerService schedulerService;
+
+    /**
+     * 取得所有Trigger
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @RequestMapping("index.html")
+    public String getQrtzTriggers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        log.info("# 即将进入首页..");
+        List<Map<String, Object>> results = this.schedulerService.getQrtzTriggers();
+        request.setAttribute("list", results);
+        // request.getRequestDispatcher("/list.jsp").forward(request, response);
+        return "index";
+    }
 
     /**
      * 添加Simple Trigger
@@ -103,20 +123,6 @@ public class JobProcessController {
         // response.setContentType("text/xml;charset=utf-8");
         response.getWriter().println(0);
 
-    }
-
-    /**
-     * 取得所有Trigger
-     * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     */
-    public void getQrtzTriggers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Map<String, Object>> results = this.schedulerService.getQrtzTriggers();
-        request.setAttribute("list", results);
-        request.getRequestDispatcher("/list.jsp").forward(request, response);
     }
 
     /**
