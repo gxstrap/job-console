@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS QRTZ_BLOB_TRIGGERS;
 DROP TABLE IF EXISTS QRTZ_TRIGGERS;
 DROP TABLE IF EXISTS QRTZ_JOB_DETAILS;
 DROP TABLE IF EXISTS QRTZ_CALENDARS;
+DROP TABLE IF EXISTS customer;
 
 
 CREATE TABLE QRTZ_JOB_DETAILS
@@ -172,5 +173,9 @@ create table customer
     age bigint(13) not null,
     primary key (id)
 );
+
+INSERT INTO `customer` (`id`, `name`, `email`, `age`) VALUES ('1', '张三', 'zhangsan@163.com', '1');
+INSERT INTO `customer` (`id`, `name`, `email`, `age`) VALUES ('2', '李四', 'lisi@163.com', '1');
+
 
 commit;

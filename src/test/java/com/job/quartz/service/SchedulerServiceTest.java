@@ -1,4 +1,4 @@
-package com.job.quartz;
+package com.job.quartz.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +14,7 @@ import com.job.quartz.service.SchedulerService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring/applicationContext.xml", "classpath*:spring/applicationContext-quartz.xml" })
-public class SimpleServiceTest {
+public class SchedulerServiceTest {
 
     @Autowired
     private SchedulerService schedulerService;

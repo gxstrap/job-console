@@ -6,8 +6,16 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:spring/*.xml</param-value>
+		<param-value>classpath*:spring/applicationContext-*.xml</param-value>
 	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -23,13 +31,17 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+	<servlet>
+		<description>任务高度处理Servlet</description>
+		<display-name>JobProcessServlet</display-name>
+		<servlet-name>JobProcessServlet</servlet-name>
+		<servlet-class>com.job.biz.servlet.JobProcessServlet</servlet-class>
+	</servlet>
 
-	<listener>
-		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-	</listener>
+	<servlet-mapping>
+		<servlet-name>JobProcessServlet</servlet-name>
+		<url-pattern>/JobProcessServlet</url-pattern>
+	</servlet-mapping>
 
 	<session-config>
 		<session-timeout>30</session-timeout>
@@ -44,16 +56,6 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
-	<servlet>
-		<description>任务高度处理Servlet</description>
-		<display-name>JobProcessServlet</display-name>
-		<servlet-name>JobProcessServlet</servlet-name>
-		<servlet-class>com.job.biz.servlet.JobProcessServlet</servlet-class>
-	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>JobProcessServlet</servlet-name>
-		<url-pattern>/JobProcessServlet</url-pattern>
-	</servlet-mapping>
 
 </web-app>

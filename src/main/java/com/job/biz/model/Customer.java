@@ -1,24 +1,14 @@
 package com.job.biz.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+public class Customer implements BaseEntity<Integer> {
 
-@Entity
-public class Customer {
+    private static final long serialVersionUID = 4690806841867768874L;
 
     private Integer id;
     private String name;
     private String email;
     private Integer age;
 
-    public Customer() {
-
-    }
-
-    @Id
-    @GeneratedValue
     public Integer getId() {
         return id;
     }
@@ -35,7 +25,6 @@ public class Customer {
         this.age = age;
     }
 
-    @Column(length = 100)
     public String getEmail() {
         return email;
     }
@@ -44,7 +33,6 @@ public class Customer {
         this.email = email;
     }
 
-    @Column(length = 100)
     public String getName() {
         return name;
     }

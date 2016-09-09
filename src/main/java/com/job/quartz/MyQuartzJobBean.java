@@ -1,4 +1,4 @@
-package com.job.biz.service;
+package com.job.quartz;
 
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.DisallowConcurrentExecution;
@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import com.job.biz.service.CustomerService;
+
 @PersistJobDataAfterExecution
 @DisallowConcurrentExecution // 不允许并发执行
 public class MyQuartzJobBean extends QuartzJobBean {
@@ -25,13 +27,13 @@ public class MyQuartzJobBean extends QuartzJobBean {
         String triggerName = trigger.getKey().getName();
         String group = trigger.getKey().getGroup();
 
-        SimpleService simpleService = getApplicationContext(jobexecutioncontext).getBean("simpleService", SimpleService.class);
+        CustomerService customerService = getApplicationContext(jobexecutioncontext).getBean("customerService", CustomerService.class);
 
         // 根据Trigger组别调用不同的业务逻辑方法
         if (StringUtils.equals(group, Scheduler.DEFAULT_GROUP)) {
-            simpleService.testMethod(triggerName, group);
+            customerService.findUserById(triggerName, group);
         } else {
-            simpleService.testMethod2(triggerName, group);
+            customerService.findAllUser(triggerName, group);
         }
     }
 

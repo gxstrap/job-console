@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.WebUtils;
 
+import com.job.common.constants.Constants;
 import com.job.quartz.service.SchedulerService;
 
 @Controller
@@ -36,7 +37,7 @@ public class JobProcessController {
 
         // 获取界面以p_参数
         Map<String, Object> filterMap = WebUtils.getParametersStartingWith(request, "p_");
-        if (StringUtils.isEmpty(MapUtils.getString(filterMap, Constant.STARTTIME))) {
+        if (StringUtils.isEmpty(MapUtils.getString(filterMap, Constants.STARTTIME))) {
             response.getWriter().println(1);
         }
 

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.job.biz.Constant;
+import com.job.common.constants.Constants;
 
 @Repository("quartzDao")
 public class QuartzDao {
@@ -57,7 +57,7 @@ public class QuartzDao {
                 map.put("end_time", DateFormatUtils.format(val, "yyyy-MM-dd HH:mm:ss"));
             }
 
-            map.put("statu", Constant.status.get(MapUtils.getString(map, "trigger_state")));
+            map.put("statu", Constants.status.get(MapUtils.getString(map, "trigger_state")));
         }
 
         return results;

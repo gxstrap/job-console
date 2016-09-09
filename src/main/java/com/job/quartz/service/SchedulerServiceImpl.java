@@ -20,10 +20,13 @@ import org.quartz.impl.triggers.SimpleTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.job.biz.Constant;
+import com.job.common.constants.Constants;
+import com.job.common.datasource.DataSource;
+import com.job.common.datasource.DataSourceEnum;
 import com.job.quartz.dao.QuartzDao;
 
 @Service("schedulerService")
+@DataSource(DataSourceEnum.QUARTZ)
 public class SchedulerServiceImpl implements SchedulerService {
 
     private static final String NULLSTRING = null;
@@ -223,7 +226,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     public void schedule(Map<String, Object> map) {
 
         // 设置名称
-        String name = MapUtils.getString(map, Constant.TRIGGERNAME);
+        String name = MapUtils.getString(map, Constants.TRIGGERNAME);
         if (StringUtils.isEmpty(StringUtils.trim(name))) {
             name = UUID.randomUUID().toString();
         } else {
@@ -232,7 +235,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
 
         // 设置Trigger分组
-        String group = MapUtils.getString(map, Constant.TRIGGERGROUP);
+        String group = MapUtils.getString(map, Constants.TRIGGERGROUP);
         if (StringUtils.isEmpty(group)) {
             group = Scheduler.DEFAULT_GROUP;
         }
@@ -247,7 +250,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         trigger.setRepeatInterval(1000L);
 
         // 设置开始时间
-        String temp = MapUtils.getString(map, Constant.STARTTIME);
+        String temp = MapUtils.getString(map, Constants.STARTTIME);
         if (StringUtils.isNotEmpty(temp)) {
             try {
                 trigger.setStartTime(DateUtils.parseDate(temp, new String[] { "yyyy-MM-dd HH:mm" }));
@@ -257,7 +260,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
 
         // 设置结束时间
-        temp = MapUtils.getString(map, Constant.ENDTIME);
+        temp = MapUtils.getString(map, Constants.ENDTIME);
         if (StringUtils.isNotEmpty(temp)) {
             try {
                 trigger.setEndTime(DateUtils.parseDate(temp, new String[] { "yyyy-MM-dd HH:mm" }));
@@ -267,13 +270,13 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
 
         // 设置执行次数
-        temp = MapUtils.getString(map, Constant.REPEATCOUNT);
+        temp = MapUtils.getString(map, Constants.REPEATCOUNT);
         if (StringUtils.isNotEmpty(temp) && NumberUtils.toInt(temp) > 0) {
             trigger.setRepeatCount(NumberUtils.toInt(temp));
         }
 
         // 设置执行时间间隔
-        temp = MapUtils.getString(map, Constant.REPEATINTERVEL);
+        temp = MapUtils.getString(map, Constants.REPEATINTERVEL);
         if (StringUtils.isNotEmpty(temp) && NumberUtils.toLong(temp) > 0) {
             trigger.setRepeatInterval(NumberUtils.toLong(temp) * 1000);
         }

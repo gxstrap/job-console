@@ -19,7 +19,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.util.WebUtils;
 
-import com.job.biz.Constant;
+import com.job.common.constants.Constants;
 import com.job.quartz.service.SchedulerService;
 
 /**
@@ -79,7 +79,7 @@ public class JobProcessServlet extends HttpServlet {
 
         // 获取界面以p_参数
         Map<String, Object> filterMap = WebUtils.getParametersStartingWith(request, "p_");
-        if (StringUtils.isEmpty(MapUtils.getString(filterMap, Constant.STARTTIME))) {
+        if (StringUtils.isEmpty(MapUtils.getString(filterMap, Constants.STARTTIME))) {
             response.getWriter().println(1);
         }
 
