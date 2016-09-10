@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import com.job.common.constants.Constants;
@@ -33,12 +35,7 @@ public class JobProcessController {
     public SchedulerService schedulerService;
 
     /**
-     * 取得所有Trigger
-     * 
-     * @param request
-     * @param response
-     * @throws ServletException
-     * @throws IOException
+     * 进入查询控制台页面
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String getQrtzTriggers(Model model) throws ServletException, IOException {
@@ -47,6 +44,60 @@ public class JobProcessController {
         model.addAttribute("list", results);
         // request.getRequestDispatcher("/list.jsp").forward(request, response);
         return "index";
+    }
+
+    /**
+     * 更新Trigger状态或删除操作
+     * 
+     * @param name
+     *            Trigger 名称
+     * @param group
+     *            Trigger 组名
+     * @param flag
+     *            1=暂停，2=恢复，3=删除
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/trigger", method = RequestMethod.POST)
+    public Boolean trigger(@RequestParam("name") String name, @RequestParam("group") String group, @RequestParam("flag") Integer flag) {
+        log.info("# name={} , group={} , flag={}", name, group, flag);
+        boolean result = true;
+        switch (flag) {
+        case 1:
+            schedulerService.pauseTrigger(name, group);
+            break;
+        case 2:
+            schedulerService.resumeTrigger(name, group);
+            break;
+        default:
+            result = schedulerService.removeTrigdger(name, group);
+            break;
+        }
+
+        return result;
+    }
+
+    /**
+     * 进入新增页面
+     * 
+     * @return
+     */
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String toAdd(Model model) {
+        log.info("# 进入新增页面");
+        return "add";
+    }
+
+    /**
+     * 进入新增页面
+     * 
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String add(Model model) {
+        log.info("# 进入新增页面");
+        return "add";
     }
 
     /**

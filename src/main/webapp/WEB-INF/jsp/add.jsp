@@ -21,6 +21,7 @@
 
 <link href="${ctx}/static/bootstrap/css/bootstrap.css?${version_css}" rel="stylesheet">
 <link href="${ctx}/static/bootstrap/css/dashboard.css?${version_css}" rel="stylesheet">
+<link href="${ctx}/static/jquery/themes/base/jquery-ui.min.css?${version_css}" rel="stylesheet" type="text/css" />
 
 <script src="${ctx}/static/bootstrap/js/ie-emulation-modes-warning.js?${version_js}"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -47,77 +48,77 @@
 		<div class="row">
 			<div class="col-sm-2 col-md-1 sidebar">
 				<ul class="nav nav-sidebar">
-					<li class="active"><a href="${ctx }/index">控制台</a></li>
-					<li><a href="${ctx }/add">新增</a></li>
+					<li><a href="${ctx }/index">控制台</a></li>
+					<li class="active"><a href="${ctx }/add">新增</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
 				<div class="row">
 					<div class="col-md-8">
-						<form class="form-inline" role="form" action="${ctx }/index">
+						<form class="form-horizontal" role="form">
 							<div class="form-group">
-								<label class="sr-only" for="triggerName">Trigger 名称</label> <input type="text" class="form-control" id="triggerName" placeholder="Trigger 名称">
+								<label for="triggerName" class="col-sm-2 control-label">Trigger名称</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="triggerName" name="triggerName" placeholder="必填">
+								</div>
 							</div>
 							<div class="form-group">
-								<label class="sr-only" for="triggerGroup">Trigger 分组</label> <input type="text" class="form-control" id="triggerGroup" placeholder="Trigger 分组">
+								<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
+								<div class="col-sm-10">
+									<select class="form-control" id="triggerGroup" name="triggerGroup">
+										<option value="DEFAULT">default</option>
+									</select>
+								</div>
 							</div>
-							<button type="submit" class="btn btn-info">查询</button>
+							<div class="form-group">
+								<label for="startTime" class="col-sm-2 control-label">开始时间</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="startTime" name="startTime" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="endTime" class="col-sm-2 control-label">结束时间</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="endTime" name="endTime" readonly="readonly">
+								</div>
+								<!-- 								<p class="help-block">Example block-level help text here.</p> -->
+							</div>
+							<div class="form-group">
+								<label for="repeatCount" class="col-sm-2 control-label">执行次数</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="repeatCount" name="repeatCount" placeholder="表示Trigger启动后执行多少次结束，不填写执行一次">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="repeatInterval" class="col-sm-2 control-label">执行间隔</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="repeatInterval" name="repeatInterval" placeholder="表示Trigger间隔多长时间执行一次，不填写前后两次执行没有时间间隔，直到任务结束">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-info">添加</button>
+								</div>
+							</div>
 						</form>
 					</div>
-				</div>
-				<br />
-				<div class="table-responsive">
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr class="info">
-								<th>Trigger 名称</th>
-								<th>Trigger 分组</th>
-								<th>下次执行时间</th>
-								<th>上次执行时间</th>
-								<th>优先级</th>
-								<th>Trigger 状态</th>
-								<th>Trigger 类型</th>
-								<th>开始时间</th>
-								<th>结束时间</th>
-								<th>操作</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="t" items="${list }">
-								<tr>
-									<td>${t.display_name}</td>
-									<td>${t.trigger_group}</td>
-									<td>${t.next_fire_time}</td>
-									<td>${t.prev_fire_time}</td>
-									<td>${t.priority}</td>
-									<td>${t.statu}</td>
-									<td>${t.trigger_type}</td>
-									<td>${t.start_time}</td>
-									<td>${t.end_time}</td>
-									<td>
-										<button type="button" class="btn btn-info btn-xs" id="pause" data-name="${t.trigger_name}" data-group="${t.trigger_group}">暂停</button>
-										<button type="button" class="btn btn-info btn-xs" id="resume" data-name="${t.trigger_name}" data-group="${t.trigger_group}">恢复</button>
-										<button type="button" class="btn btn-info btn-xs" id="remove" data-name="${t.trigger_name}" data-group="${t.trigger_group}">删除</button>
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="${ctx}/static/jquery/jquery-1.12.4.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/jquery-3.1.0.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/ui/jquery-ui.custom.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/ui/jquery.ui.datepicker.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/ui/i18n/jquery.ui.datepicker-zh-CN.min.js?${version_js}"></script>
 	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js?${version_js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="${ctx}/static/bootstrap/js/ie10-viewport-bug-workaround.js?${version_js}"></script>
 	<script type="text/javascript">
     var _ctx = "${ctx}";
-    var currentPage = "console";
+    var currentPage = "add";
   </script>
 	<script src="${ctx}/static/js/job.js?${version_js}"></script>
 
