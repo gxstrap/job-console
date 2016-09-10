@@ -15,7 +15,7 @@ import com.job.common.datasource.DataSource;
 import com.job.common.datasource.DataSourceEnum;
 
 @Service("customerService")
-@DataSource(DataSourceEnum.AUTH)
+@DataSource(DataSourceEnum.QUARTZ)
 public class CustomerService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);

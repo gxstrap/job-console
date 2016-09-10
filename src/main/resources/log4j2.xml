@@ -28,12 +28,13 @@
 
 	<loggers>
 		<!-- 3rdparty Loggers -->
-		<logger name="com.sundoctor" level="debug" />
+		<logger name="com.job" level="debug" />
 		<logger name="org.springframework" level="info" />
 		<logger name="org.hibernate" level="info" />
 		<logger name="org.apache" level="info" />
+		<logger name="org.mybatis.spring.SqlSessionUtils" level="info" />
+		<logger name="org.mybatis.spring.transaction.SpringManagedTransaction" level="info" />
 		<logger name="org.quartz" level="info" />
-		<logger name="com.mchange" level="info" />
 
 		<!-- print sql log -->
 		<logger name="org.apache.ibatis.jdbc.ScriptRunner" level="debug" />

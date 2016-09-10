@@ -4,12 +4,6 @@
 	xsi:schemaLocation="    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<!-- 自动扫描且只扫描@Controller -->
-	<context:component-scan base-package="com.job">
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
-	</context:component-scan>
-
 	<util:properties id="p_datasource" location="classpath:/config/jdbc.properties" />
 
 	<!-- quartz数据源，使用alibaba druid连接池 -->
@@ -119,10 +113,5 @@
 		<aop:pointcut id="allManagerMethod" expression="execution(* com.job..*Service.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" order="0" />
 	</aop:config>
-
-
-
-
-
 
 </beans>
