@@ -27,10 +27,14 @@ $(function() {
   } else if (currentPage == 'add') {
     // 新增页面
 
-//    $("#startTime").datepicker("option", "dateFormat", 'yyyy-mm-dd MM:ss');
-//    $("#endTime").datepicker("option", "dateFormat", 'yyyy-mm-dd MM:ss');
-    $("#startTime").datepicker();
-    $("#endTime").datepicker();
+    $('#startTime').datetimepicker({
+      timeFormat: "HH:mm",
+      dateFormat: "yy-mm-dd"
+    });
+    $('#endTime').datetimepicker({
+      timeFormat: "HH:mm",
+      dateFormat: "yy-mm-dd"
+    });
   }
 });
 

@@ -14,14 +14,12 @@
 <link rel="icon" type="image/x-icon" href="${ctx}/static/images/favicon.ico">
 <link rel="shortcut icon" type="image/x-icon" href="${ctx}/static/images/favicon.ico">
 
-<c:set var="version_css" value="20160909" scope="application"></c:set>
-<c:set var="version_js" value="20160909" scope="application"></c:set>
-
 <title>定时任务控制台</title>
 
 <link href="${ctx}/static/bootstrap/css/bootstrap.css?${version_css}" rel="stylesheet">
 <link href="${ctx}/static/bootstrap/css/dashboard.css?${version_css}" rel="stylesheet">
-<link href="${ctx}/static/jquery/themes/base/jquery-ui.min.css?${version_css}" rel="stylesheet" type="text/css" />
+<link href="${ctx}/static/jquery/ui/jquery-ui.min.css?${version_css}" rel="stylesheet" type="text/css" />
+<link href="${ctx}/static/jquery/ui/jquery-ui-timepicker-addon.css?${version_css}" rel="stylesheet">
 
 <script src="${ctx}/static/bootstrap/js/ie-emulation-modes-warning.js?${version_js}"></script>
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -110,9 +108,9 @@
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${ctx}/static/jquery/jquery-3.1.0.min.js?${version_js}"></script>
-	<script src="${ctx}/static/jquery/ui/jquery-ui.custom.min.js?${version_js}"></script>
-	<script src="${ctx}/static/jquery/ui/jquery.ui.datepicker.min.js?${version_js}"></script>
-	<script src="${ctx}/static/jquery/ui/i18n/jquery.ui.datepicker-zh-CN.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/ui/jquery-ui.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/ui/jquery-ui-timepicker-addon.js?${version_js}"></script>
+
 	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js?${version_js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="${ctx}/static/bootstrap/js/ie10-viewport-bug-workaround.js?${version_js}"></script>

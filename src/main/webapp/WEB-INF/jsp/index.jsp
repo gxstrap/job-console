@@ -14,9 +14,6 @@
 <link rel="icon" type="image/x-icon" href="${ctx}/static/images/favicon.ico">
 <link rel="shortcut icon" type="image/x-icon" href="${ctx}/static/images/favicon.ico">
 
-<c:set var="version_css" value="20160909" scope="application"></c:set>
-<c:set var="version_js" value="20160909" scope="application"></c:set>
-
 <title>定时任务控制台</title>
 
 <link href="${ctx}/static/bootstrap/css/bootstrap.css?${version_css}" rel="stylesheet">
@@ -111,7 +108,7 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="${ctx}/static/jquery/jquery-1.12.4.min.js?${version_js}"></script>
+	<script src="${ctx}/static/jquery/jquery-3.1.0.min.js?${version_js}"></script>
 	<script src="${ctx}/static/bootstrap/js/bootstrap.min.js?${version_js}"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="${ctx}/static/bootstrap/js/ie10-viewport-bug-workaround.js?${version_js}"></script>
