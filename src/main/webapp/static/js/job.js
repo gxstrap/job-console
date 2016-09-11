@@ -27,11 +27,11 @@ $(function() {
   } else if (currentPage == 'add') {
     // 新增页面
 
-    $('#startTime').datetimepicker({
+    $("#timeForm [name='startTime'").datetimepicker({
       timeFormat: "HH:mm",
       dateFormat: "yy-mm-dd"
     });
-    $('#endTime').datetimepicker({
+    $("#timeForm [name='endTime'").datetimepicker({
       timeFormat: "HH:mm",
       dateFormat: "yy-mm-dd"
     });
@@ -52,13 +52,16 @@ function trigger(name, group, flag) {
       "flag": flag
     },
     success: function(data) {
-      if (data)
+      if (data) {
         alert("操作成功!");
-      else
+      } else {
         alert("操作失败!");
+      }
+      window.location.href = _ctx + "/index";
     },
     error: function(data, status, e) { // 服务器响应失败时的处理函数
-      alert("操作成功!");
+      alert("操作失败!");
+      window.location.href = _ctx + "/index";
     }
   });
 }

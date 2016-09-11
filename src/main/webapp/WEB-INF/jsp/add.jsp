@@ -3,8 +3,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,55 +49,155 @@
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
-				<div class="row">
-					<div class="col-md-8">
-						<form class="form-horizontal" role="form">
-							<div class="form-group">
-								<label for="triggerName" class="col-sm-2 control-label">Trigger名称</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="triggerName" name="triggerName" placeholder="必填">
+				<div class="bs-example bs-example-tabs">
+
+					<ul id="myTab" class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#cronExpression" id="cronExpression-tab" role="tab" data-toggle="tab" aria-controls="cronExpression" aria-expanded="true">Trigger表达式模式</a></li>
+						<li role="presentation"><a href="#frequency" role="tab" id="frequency-tab" data-toggle="tab" aria-controls="frequency">执行频率模式</a></li>
+						<li role="presentation"><a href="#time" role="tab" id="time-tab" data-toggle="tab" aria-controls="time">指定时间执行模式</a></li>
+					</ul>
+
+					<div id="myTabContent" class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="cronExpression" aria-labelledby="cronExpression-tab">
+							<br />
+							<div class="row">
+								<div class="col-md-8">
+									<form class="form-horizontal" role="form" action="${ctx }/add" method="post" id="cronExpressionForm">
+										<input type="hidden" name="triggerType" value="1" />
+										<div class="form-group">
+											<label for="triggerName" class="col-sm-2 control-label">Trigger名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="triggerName" placeholder="必填">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
+											<div class="col-sm-10">
+												<select class="form-control" name="triggerGroup">
+													<option value="DEFAULT">default</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="cronExpression" class="col-sm-2 control-label">Cron表达式</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="cronExpression" placeholder='必填，Cron表达式(如"0/10 * * ? * * *"，每10秒中执行调试一次)，对使用者要求比较，要会写Cron表达式，实际项目中不适用'>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+												<button type="submit" class="btn btn-info">添加</button>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
-								<div class="col-sm-10">
-									<select class="form-control" id="triggerGroup" name="triggerGroup">
-										<option value="DEFAULT">default</option>
-									</select>
+						</div>
+
+						<div role="tabpanel" class="tab-pane fade" id="frequency" aria-labelledby="frequency-tab">
+							<br />
+							<div class="row">
+								<div class="col-md-8">
+									<form class="form-horizontal" role="form" action="${ctx }/add" method="post" id="frequencyForm">
+										<input type="hidden" name="triggerType" value="2" />
+										<div class="form-group">
+											<label for="triggerName" class="col-sm-2 control-label">Trigger名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="triggerName" placeholder="必填">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
+											<div class="col-sm-10">
+												<select class="form-control" name="triggerGroup">
+													<option value="DEFAULT">default</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="repeatInterval" class="col-sm-2 control-label">时间类型</label>
+											<div class="col-sm-10">
+												<select class="form-control" name="selType">
+													<option value="second">秒钟</option>
+													<option value="minute">分钟</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="intervalTime" class="col-sm-2 control-label">执行间隔时间</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="intervalTime" placeholder="表示Trigger间隔多长时间执行一次，不填写前后两次执行没有时间间隔，直到任务结束">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+												<button type="submit" class="btn btn-info">添加</button>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="startTime" class="col-sm-2 control-label">开始时间</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="startTime" name="startTime" readonly="readonly">
+						</div>
+
+						<div role="tabpanel" class="tab-pane fade" id="time" aria-labelledby="time-tab">
+							<br />
+							<div class="row">
+								<div class="col-md-8">
+									<form class="form-horizontal" role="form" action="${ctx }/add" method="post" id="timeForm">
+										<input type="hidden" name="triggerType" value="3" />
+										<div class="form-group">
+											<label for="triggerName" class="col-sm-2 control-label">Trigger名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="triggerName" placeholder="必填">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
+											<div class="col-sm-10">
+												<select class="form-control" name="triggerGroup">
+													<option value="DEFAULT">default</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="startTime" class="col-sm-2 control-label">开始时间</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="startTime" readonly="readonly">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="endTime" class="col-sm-2 control-label">结束时间</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="endTime" readonly="readonly">
+											</div>
+											<!-- 								<p class="help-block">Example block-level help text here.</p> -->
+										</div>
+										<div class="form-group">
+											<label for="repeatCount" class="col-sm-2 control-label">执行次数</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="repeatCount" placeholder="表示Trigger启动后执行多少次结束，不填写执行一次">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="repeatInterval" class="col-sm-2 control-label">执行间隔</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="repeatInterval" placeholder="表示Trigger间隔多长时间执行一次，不填写前后两次执行没有时间间隔，直到任务结束">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-sm-offset-2 col-sm-10">
+												<button type="submit" class="btn btn-info">添加</button>
+											</div>
+										</div>
+									</form>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="endTime" class="col-sm-2 control-label">结束时间</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="endTime" name="endTime" readonly="readonly">
-								</div>
-								<!-- 								<p class="help-block">Example block-level help text here.</p> -->
-							</div>
-							<div class="form-group">
-								<label for="repeatCount" class="col-sm-2 control-label">执行次数</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="repeatCount" name="repeatCount" placeholder="表示Trigger启动后执行多少次结束，不填写执行一次">
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="repeatInterval" class="col-sm-2 control-label">执行间隔</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" id="repeatInterval" name="repeatInterval" placeholder="表示Trigger间隔多长时间执行一次，不填写前后两次执行没有时间间隔，直到任务结束">
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-offset-2 col-sm-10">
-									<button type="submit" class="btn btn-info">添加</button>
-								</div>
-							</div>
-						</form>
+
+						</div>
 					</div>
+					<!-- div tab-content , end -->
+
+
 				</div>
 			</div>
 		</div>
@@ -119,7 +217,5 @@
     var currentPage = "add";
   </script>
 	<script src="${ctx}/static/js/job.js?${version_js}"></script>
-
-
 </body>
 </html>

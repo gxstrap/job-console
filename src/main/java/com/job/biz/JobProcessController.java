@@ -1,29 +1,29 @@
 package com.job.biz;
 
 import java.io.IOException;
-import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.util.WebUtils;
 
-import com.job.common.constants.Constants;
+import com.job.biz.model.Trigger;
 import com.job.quartz.service.SchedulerService;
 
 @Controller
@@ -33,6 +33,13 @@ public class JobProcessController {
 
     @Autowired
     public SchedulerService schedulerService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     /**
      * 进入查询控制台页面
@@ -93,141 +100,44 @@ public class JobProcessController {
      * 
      * @return
      */
-    @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(Model model) {
-        log.info("# 进入新增页面");
-        return "add";
-    }
+    public String add(Model model, @ModelAttribute Trigger trigger) {
+        try {
 
-    /**
-     * 添加Simple Trigger
-     * 
-     * @param request
-     * @param response
-     */
-    public void addSimpleTrigger(HttpServletRequest request, HttpServletResponse response) throws IOException {
+            // 添加任务调试
+            log.info("# triggerType={}", trigger.getTriggerType());
+            switch (trigger.getTriggerType()) {
+            case 1:
+                // Trigger表达式模式
+                log.info("# triggerName={} , triggerGroup={} , cronExpression={}", trigger.getTriggerName(), trigger.getTriggerGroup(), trigger.getCronExpression());
+                schedulerService.schedule(trigger.getTriggerName(), trigger.getTriggerGroup(), trigger.getCronExpression());
+                break;
+            case 2:
+                // 执行频率模式
+                String expression = null;
+                if (StringUtils.equals(trigger.getSelType(), "second")) {
+                    // 每多秒执行一次
+                    expression = "0/" + trigger.getIntervalTime() + " * * ? * * *";
+                } else if (StringUtils.equals(trigger.getSelType(), "minute")) {
+                    // 每多少分执行一次
+                    expression = "0 0/" + trigger.getIntervalTime() + " * ? * * *";
+                }
+                log.info("# triggerName={} , triggerGroup={} , selType={} , expression={}", trigger.getTriggerName(), trigger.getTriggerGroup(), trigger.getSelType(), expression);
+                schedulerService.schedule(trigger.getTriggerName(), trigger.getTriggerGroup(), expression);
+                break;
+            case 3:
+                // 添加任务调试
+                log.info("# name={} , startTimie={} , endTime={} , repeatCount={} , repeatInterval={} , group={}", trigger.getTriggerName(), trigger.getStartTime(), trigger.getEndTime(), trigger.getRepeatCount(), trigger.getRepeatInterval(),
+                    trigger.getTriggerName());
+                schedulerService.schedule(trigger.getTriggerName(), trigger.getStartTime(), trigger.getEndTime(), trigger.getRepeatCount(), trigger.getRepeatInterval(), trigger.getTriggerName());
+                // 指定时间执行模式
+                break;
+            }
 
-        // 获取界面以p_参数
-        Map<String, Object> filterMap = WebUtils.getParametersStartingWith(request, "p_");
-        if (StringUtils.isEmpty(MapUtils.getString(filterMap, Constants.STARTTIME))) {
-            response.getWriter().println(1);
+            log.info("# 进入新增页面");
+        } catch (Exception e) {
+            log.error("# 新增trigger失败 , error message={}", e.getMessage());
         }
-
-        // 添加任务调试
-        schedulerService.schedule(filterMap);
-
-        // response.setContentType("text/xml;charset=utf-8");
-        response.getWriter().println(0);
-
+        return "index";
     }
-
-    /**
-     * 根据Cron表达式添加Cron Trigger，
-     * 
-     * @param request
-     * @param response
-     */
-    public void addCronTriggerByExpression(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        // 获取界面以参数
-        String triggerName = request.getParameter("triggerName");
-        String cronExpression = request.getParameter("cronExpression");
-        if (StringUtils.isEmpty(triggerName) || StringUtils.isEmpty(cronExpression)) {
-            response.getWriter().println(1);
-        }
-
-        // 添加任务调试
-        schedulerService.schedule(triggerName, cronExpression);
-
-        // response.setContentType("text/xml;charset=utf-8");
-        response.getWriter().println(0);
-
-    }
-
-    /**
-     * 根据添加Cron Trigger，
-     * 
-     * @param request
-     * @param response
-     */
-    public void addCronTriggerBy(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        // 获取界面以参数
-        String triggerName = request.getParameter("triggerName");
-        String val = request.getParameter("val");
-        String selType = request.getParameter("selType");
-        if (StringUtils.isEmpty(triggerName) || StringUtils.isEmpty(val) || NumberUtils.toLong(val) < 0 || NumberUtils.toLong(val) > 59) {
-            response.getWriter().println(1);
-        }
-
-        String expression = null;
-        if (StringUtils.equals(selType, "second")) {
-            // 每多秒执行一次
-            expression = "0/" + val + " * * ? * * *";
-        } else if (StringUtils.equals(selType, "minute")) {
-            // 每多少分执行一次
-            expression = "0 0/" + val + " * ? * * *";
-        }
-
-        // 添加任务调试
-        schedulerService.schedule(triggerName, expression);
-
-        // response.setContentType("text/xml;charset=utf-8");
-        response.getWriter().println(0);
-
-    }
-
-    /**
-     * 根据名称和组别暂停Tigger
-     * 
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    public void pauseTrigger(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // request.setCharacterEncoding("UTF-8");
-        String triggerName = URLDecoder.decode(request.getParameter("triggerName"), "utf-8");
-        String group = URLDecoder.decode(request.getParameter("group"), "utf-8");
-
-        schedulerService.pauseTrigger(triggerName, group);
-        response.getWriter().println(0);
-    }
-
-    /**
-     * 根据名称和组别暂停Tigger
-     * 
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    public void resumeTrigger(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // request.setCharacterEncoding("UTF-8");
-        String triggerName = URLDecoder.decode(request.getParameter("triggerName"), "utf-8");
-        String group = URLDecoder.decode(request.getParameter("group"), "utf-8");
-
-        schedulerService.resumeTrigger(triggerName, group);
-        response.getWriter().println(0);
-    }
-
-    /**
-     * 根据名称和组别暂停Tigger
-     * 
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    public void removeTrigdger(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // request.setCharacterEncoding("UTF-8");
-        String triggerName = URLDecoder.decode(request.getParameter("triggerName"), "utf-8");
-        String group = URLDecoder.decode(request.getParameter("group"), "utf-8");
-
-        boolean rs = schedulerService.removeTrigdger(triggerName, group);
-        if (rs) {
-            response.getWriter().println(0);
-        } else {
-            response.getWriter().println(1);
-        }
-    }
-
 }

@@ -17,6 +17,8 @@ import org.quartz.SchedulerException;
 import org.quartz.TriggerKey;
 import org.quartz.impl.triggers.CronTriggerImpl;
 import org.quartz.impl.triggers.SimpleTriggerImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ import com.job.quartz.dao.QuartzDao;
 @Service("schedulerService")
 @DataSource(DataSourceEnum.QUARTZ)
 public class SchedulerServiceImpl implements SchedulerService {
+
+    private static final Logger log = LoggerFactory.getLogger(SchedulerServiceImpl.class);
 
     private static final String NULLSTRING = null;
     private static final Date NULLDATE = null;
@@ -57,6 +61,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void schedule(String name, String group, String cronExpression) {
+        log.info("# name={} , group={} ,  cronExpression={}", name, group, cronExpression);
         try {
             schedule(name, group, new CronExpression(cronExpression));
         } catch (ParseException e) {
@@ -191,7 +196,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void schedule(String name, Date startTime, Date endTime, int repeatCount, long repeatInterval, String group) {
-
+        log.info("# name={} , startTimie={} , endTime={} , repeatCount={} , repeatInterval={} , group={}", name, startTime, endTime, repeatCount, repeatInterval, group);
         if (this.isValidExpression(startTime)) {
 
             if (name == null || name.trim().equals("")) {
