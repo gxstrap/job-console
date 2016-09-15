@@ -88,7 +88,7 @@
 										</div>
 										<div class="form-group">
 											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-info">添加</button>
+												<button type="button" class="btn btn-info" id="cronExpressionBtn">添加</button>
 											</div>
 										</div>
 									</form>
@@ -135,7 +135,7 @@
 										</div>
 										<div class="form-group">
 											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-info">添加</button>
+												<button type="button" class="btn btn-info" id="frequencyBtn">添加</button>
 											</div>
 										</div>
 									</form>
@@ -192,7 +192,7 @@
 										</div>
 										<div class="form-group">
 											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-info">添加</button>
+												<button type="button" class="btn btn-info" id="timeBtn">添加</button>
 											</div>
 										</div>
 									</form>
