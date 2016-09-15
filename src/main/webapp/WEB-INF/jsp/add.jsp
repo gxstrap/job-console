@@ -74,7 +74,9 @@
 											<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
 											<div class="col-sm-10">
 												<select class="form-control" name="triggerGroup">
-													<option value="DEFAULT">default</option>
+													<c:forEach var="tg" items="${servers }">
+														<option value="${tg }">${tg }</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -110,7 +112,9 @@
 											<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
 											<div class="col-sm-10">
 												<select class="form-control" name="triggerGroup">
-													<option value="DEFAULT">default</option>
+													<c:forEach var="tg" items="${servers }">
+														<option value="${tg }">${tg }</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>
@@ -155,7 +159,9 @@
 											<label for="triggerGroup" class="col-sm-2 control-label">Trigger分组</label>
 											<div class="col-sm-10">
 												<select class="form-control" name="triggerGroup">
-													<option value="DEFAULT">default</option>
+													<c:forEach var="tg" items="${servers }">
+														<option value="${tg }">${tg }</option>
+													</c:forEach>
 												</select>
 											</div>
 										</div>

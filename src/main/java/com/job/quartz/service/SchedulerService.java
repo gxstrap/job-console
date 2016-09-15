@@ -6,9 +6,13 @@ import java.util.Map;
 
 import org.quartz.CronExpression;
 
+import com.job.biz.model.QrtzTriggers;
+
 public interface SchedulerService {
 
     List<Map<String, Object>> getQrtzTriggers();
+
+    List<QrtzTriggers> getQrtzTriggers(String name, String group);
 
     /**
      * 根据 Quartz Cron Expression 调试任务

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -54,7 +55,12 @@
 								<label class="sr-only" for="triggerName">Trigger 名称</label> <input type="text" class="form-control" id="triggerName" placeholder="Trigger 名称">
 							</div>
 							<div class="form-group">
-								<label class="sr-only" for="triggerGroup">Trigger 分组</label> <input type="text" class="form-control" id="triggerGroup" placeholder="Trigger 分组">
+								<label class="sr-only" for="triggerGroup">Trigger 分组</label> <select class="form-control" name="triggerGroup">
+									<c:forEach var="tg" items="${servers }">
+										<option value="${tg }">${tg }</option>
+									</c:forEach>
+								</select>
+
 							</div>
 							<button type="submit" class="btn btn-info">查询</button>
 						</form>
@@ -80,19 +86,19 @@
 						<tbody>
 							<c:forEach var="t" items="${list }">
 								<tr>
-									<td>${t.display_name}</td>
-									<td>${t.trigger_group}</td>
-									<td>${t.next_fire_time}</td>
-									<td>${t.prev_fire_time}</td>
+									<td>${t.triggerName}</td>
+									<td>${t.triggerGroup}</td>
+									<td><fmt:formatDate value="${t.nextFireTime}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+									<td><fmt:formatDate value="${t.prevFireTime}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
 									<td>${t.priority}</td>
-									<td>${t.statu}</td>
-									<td>${t.trigger_type}</td>
-									<td>${t.start_time}</td>
-									<td>${t.end_time}</td>
+									<td>${t.state}</td>
+									<td>${t.triggerType}</td>
+									<td><fmt:formatDate value="${t.startTime}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
+									<td><fmt:formatDate value="${t.endTime}" pattern="yyyy/MM/dd HH:mm:ss" /></td>
 									<td>
-										<button type="button" class="btn btn-info btn-xs" id="pause" data-name="${t.trigger_name}" data-group="${t.trigger_group}">暂停</button>
-										<button type="button" class="btn btn-info btn-xs" id="resume" data-name="${t.trigger_name}" data-group="${t.trigger_group}">恢复</button>
-										<button type="button" class="btn btn-info btn-xs" id="remove" data-name="${t.trigger_name}" data-group="${t.trigger_group}">删除</button>
+										<button type="button" class="btn btn-info btn-xs" id="pause" data-name="${t.triggerName}" data-group="${t.triggerGroup}">暂停</button>
+										<button type="button" class="btn btn-info btn-xs" id="resume" data-name="${t.triggerName}" data-group="${t.triggerGroup}">恢复</button>
+										<button type="button" class="btn btn-info btn-xs" id="remove" data-name="${t.triggerName}" data-group="${t.triggerGroup}">删除</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -115,7 +121,6 @@
     var currentPage = "console";
   </script>
 	<script src="${ctx}/static/js/job.js?${version_js}"></script>
-
 
 </body>
 </html>

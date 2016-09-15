@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.job.biz.mapper.QrtzTriggersMapper;
+import com.job.biz.model.QrtzTriggers;
 import com.job.common.constants.Constants;
 import com.job.common.datasource.DataSource;
 import com.job.common.datasource.DataSourceEnum;
@@ -38,15 +40,28 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Autowired
     private Scheduler scheduler;
+
     @Autowired
     private JobDetail jobDetail;
 
     @Autowired
     private QuartzDao quartzDao;
 
+    @Autowired
+    private QrtzTriggersMapper qrtzTriggersMapper;
+
     @Override
     public List<Map<String, Object>> getQrtzTriggers() {
         return quartzDao.getQrtzTriggers();
+    }
+
+    @Override
+    public List<QrtzTriggers> getQrtzTriggers(String name, String group) {
+        QrtzTriggers qt = new QrtzTriggers();
+        qt.setTriggerName(name);
+        qt.setTriggerGroup(group);
+        // return quartzDao.getQrtzTriggers();
+        return qrtzTriggersMapper.findAll(qt);
     }
 
     @Override

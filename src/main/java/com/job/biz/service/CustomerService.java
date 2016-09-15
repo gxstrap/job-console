@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,28 +18,35 @@ import com.job.common.datasource.DataSourceEnum;
 
 @Service("customerService")
 @DataSource(DataSourceEnum.QUARTZ)
-public class CustomerService {
+public class CustomerService extends DefaultService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);
 
     @Autowired
     private CustomerMapper customerMapper;
 
-    public void findUserById(String triggerName, String group) {
-        // 这里执行定时调度业务
-        Customer customer = customerMapper.findById(1);
-        log.info("#findUserById : triggerName={} , group={}", triggerName, group);
-        log.info("#customer id={} , name={} , email={} , age={}", customer.getId(), customer.getName(), customer.getEmail(), customer.getAge());
+    @Override
+    public String getClassName() {
+        return "CustomerService";
     }
 
-    public void findAllUser(String triggerName, String group) {
+    @Override
+    @PostConstruct
+    public void addService() {
+        log.info("# add server for CustomerService");
+        ServerBuilderContext.addServer(getClassName(), CustomerService.class);
+    }
+
+    @Override
+    public void execute() {
+        log.info("#开始处理业务 , server name=[{}]", getClassName());
         // 这里执行定时调度业务
         Map<String, Object> map = new HashMap<String, Object>();
         List<Customer> list = customerMapper.findAllByFilter(map);
-        log.info("# findAllUser : triggerName={} , group={}", triggerName, group);
         for (Customer customer : list) {
             log.info("#customer id={} , name={} , email={} , age={}", customer.getId(), customer.getName(), customer.getEmail(), customer.getAge());
         }
+        log.info("#结束处理业务 , server name=[{}]", getClassName());
     }
 
 }
