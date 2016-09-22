@@ -6,70 +6,44 @@
 
 	<util:properties id="p_datasource" location="classpath:/config/jdbc.properties" />
 
-	<!-- quartz数据源，使用alibaba druid连接池 -->
-	<bean id="quartzDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="name" value="#{p_datasource['quartz.name']}" />
-		<property name="url" value="#{p_datasource['quartz.url']}" />
-		<property name="username" value="#{p_datasource['quartz.username']}" />
-		<property name="password" value="#{p_datasource['quartz.password']}" />
-		<property name="driverClassName" value="#{p_datasource['quartz.driverClassName']}" />
-		<property name="initialSize" value="#{p_datasource['quartz.initialSize']}" />
-		<property name="maxActive" value="#{p_datasource['quartz.maxActive']}" />
-		<property name="minIdle" value="#{p_datasource['quartz.minIdle']}" />
-		<property name="maxWait" value="#{p_datasource['quartz.maxWait']}" />
-		<property name="useUnfairLock" value="#{p_datasource['quartz.useUnfairLock']}" />
-		<property name="validationQuery" value="#{p_datasource['quartz.validationQuery']}" />
-		<property name="testOnBorrow" value="#{p_datasource['quartz.testOnBorrow']}" />
-		<property name="testOnReturn" value="#{p_datasource['quartz.testOnReturn']}" />
-		<property name="testWhileIdle" value="#{p_datasource['quartz.testWhileIdle']}" />
-		<property name="timeBetweenEvictionRunsMillis" value="#{p_datasource['quartz.timeBetweenEvictionRunsMillis']}" />
-		<property name="minEvictableIdleTimeMillis" value="#{p_datasource['quartz.minEvictableIdleTimeMillis']}" />
-		<property name="filters" value="#{p_datasource['quartz.filters']}" />
+	<!-- MySQL数据源，使用alibaba druid连接池， -->
+	<!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> -->
+	<!-- <property name="name" value="#{p_datasource['quartz.name']}" /> -->
+	<!-- <property name="url" value="#{p_datasource['quartz.url']}" /> -->
+	<!-- <property name="username" value="#{p_datasource['quartz.username']}" /> -->
+	<!-- <property name="password" value="#{p_datasource['quartz.password']}" /> -->
+	<!-- <property name="driverClassName" value="#{p_datasource['quartz.driverClassName']}" /> -->
+	<!-- <property name="initialSize" value="#{p_datasource['quartz.initialSize']}" /> -->
+	<!-- <property name="maxActive" value="#{p_datasource['quartz.maxActive']}" /> -->
+	<!-- <property name="minIdle" value="#{p_datasource['quartz.minIdle']}" /> -->
+	<!-- <property name="maxWait" value="#{p_datasource['quartz.maxWait']}" /> -->
+	<!-- <property name="useUnfairLock" value="#{p_datasource['quartz.useUnfairLock']}" /> -->
+	<!-- <property name="validationQuery" value="#{p_datasource['quartz.validationQuery']}" /> -->
+	<!-- <property name="testOnBorrow" value="#{p_datasource['quartz.testOnBorrow']}" /> -->
+	<!-- <property name="testOnReturn" value="#{p_datasource['quartz.testOnReturn']}" /> -->
+	<!-- <property name="testWhileIdle" value="#{p_datasource['quartz.testWhileIdle']}" /> -->
+	<!-- <property name="timeBetweenEvictionRunsMillis" value="#{p_datasource['quartz.timeBetweenEvictionRunsMillis']}" /> -->
+	<!-- <property name="minEvictableIdleTimeMillis" value="#{p_datasource['quartz.minEvictableIdleTimeMillis']}" /> -->
+	<!-- <property name="filters" value="#{p_datasource['quartz.filters']}" /> -->
+	<!-- </bean> -->
+
+
+	<bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool" destroy-method="dispose">
+		<constructor-arg>
+			<bean class="org.h2.jdbcx.JdbcDataSource">
+				<!-- 内存模式 -->
+				<property name="URL" value="jdbc:h2:mem:test" />
+				<property name="user" value="sa" />
+				<property name="password" value="sa" />
+			</bean>
+		</constructor-arg>
 	</bean>
 
-	<!-- auth数据源，使用alibaba druid连接池 -->
-	<bean id="authDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<property name="name" value="#{p_datasource['auth.name']}" />
-		<property name="url" value="#{p_datasource['auth.url']}" />
-		<property name="username" value="#{p_datasource['auth.username']}" />
-		<property name="password" value="#{p_datasource['auth.password']}" />
-		<property name="driverClassName" value="#{p_datasource['auth.driverClassName']}" />
-		<property name="initialSize" value="#{p_datasource['auth.initialSize']}" />
-		<property name="maxActive" value="#{p_datasource['auth.maxActive']}" />
-		<property name="minIdle" value="#{p_datasource['auth.minIdle']}" />
-		<property name="maxWait" value="#{p_datasource['auth.maxWait']}" />
-		<property name="useUnfairLock" value="#{p_datasource['auth.useUnfairLock']}" />
-		<property name="validationQuery" value="#{p_datasource['auth.validationQuery']}" />
-		<property name="testOnBorrow" value="#{p_datasource['auth.testOnBorrow']}" />
-		<property name="testOnReturn" value="#{p_datasource['auth.testOnReturn']}" />
-		<property name="testWhileIdle" value="#{p_datasource['auth.testWhileIdle']}" />
-		<property name="timeBetweenEvictionRunsMillis" value="#{p_datasource['auth.timeBetweenEvictionRunsMillis']}" />
-		<property name="minEvictableIdleTimeMillis" value="#{p_datasource['auth.minEvictableIdleTimeMillis']}" />
-		<property name="filters" value="#{p_datasource['auth.filters']}" />
-	</bean>
-
-	<!-- 总数据源 -->
-	<bean id="dataSource" class="com.job.common.datasource.DynamicDataSource">
-		<property name="targetDataSources">
-			<map key-type="java.lang.String">
-				<entry key="quartz" value-ref="quartzDataSource" />
-				<entry key="auth" value-ref="authDataSource" />
-			</map>
-		</property>
-		<property name="defaultTargetDataSource" ref="quartzDataSource" />
-	</bean>
-
-	<!-- 数据源Aspect -->
-	<bean id="dataSourceAspect" class="com.job.common.datasource.DataSourceAspect" />
-
-	<!-- 数据源AOP majun 2014-09-28 -->
-	<aop:config>
-		<aop:aspect order="1" ref="dataSourceAspect">
-			<!-- 由于业务日志是存储在MongoDB上故排除业务日志Service -->
-			<aop:pointcut id="dsPointCut" expression="execution(* com.job..*Service.*(..))" />
-			<aop:before pointcut-ref="dsPointCut" method="before" />
-		</aop:aspect>
-	</aop:config>
+	<!-- 初始化数据表结构 -->
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+		<jdbc:script location="classpath:db/create_table.sql" />
+		<!-- <jdbc:script location="classpath:database/h2/import-data.sql" /> -->
+	</jdbc:initialize-database>
 
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -109,7 +83,6 @@
 
 	<!-- 配置那些类的方法进行事务管理，当前com.job.biz.service包中的类中所有方法需要，还需要参考tx:advice的设置 -->
 	<aop:config proxy-target-class="true">
-		<!-- <aop:pointcut id="allManagerMethod" expression="execution(* com.job.*.*(..))" /> -->
 		<aop:pointcut id="allManagerMethod" expression="execution(* com.job..*Service.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" order="0" />
 	</aop:config>

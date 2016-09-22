@@ -13,11 +13,8 @@ import org.springframework.stereotype.Service;
 
 import com.job.biz.mapper.CustomerMapper;
 import com.job.biz.model.Customer;
-import com.job.common.datasource.DataSource;
-import com.job.common.datasource.DataSourceEnum;
 
 @Service("customerService")
-@DataSource(DataSourceEnum.QUARTZ)
 public class CustomerService extends DefaultService {
 
     private static final Logger log = LoggerFactory.getLogger(CustomerService.class);

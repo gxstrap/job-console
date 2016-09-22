@@ -25,12 +25,9 @@ import org.springframework.stereotype.Service;
 import com.job.biz.mapper.QrtzTriggersMapper;
 import com.job.biz.model.QrtzTriggers;
 import com.job.common.constants.Constants;
-import com.job.common.datasource.DataSource;
-import com.job.common.datasource.DataSourceEnum;
 import com.job.quartz.dao.QuartzDao;
 
 @Service("schedulerService")
-@DataSource(DataSourceEnum.QUARTZ)
 public class SchedulerServiceImpl implements SchedulerService {
 
     private static final Logger log = LoggerFactory.getLogger(SchedulerServiceImpl.class);

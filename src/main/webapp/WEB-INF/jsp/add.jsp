@@ -62,6 +62,7 @@
 							<br />
 							<div class="row">
 								<div class="col-md-8">
+									<!-- Trigger表达式模式 -->
 									<form class="form-horizontal" role="form" action="${ctx }/add" method="post" id="cronExpressionForm">
 										<input type="hidden" name="triggerType" value="1" />
 										<div class="form-group">
@@ -100,6 +101,7 @@
 							<br />
 							<div class="row">
 								<div class="col-md-8">
+									<!-- 执行频率模式 -->
 									<form class="form-horizontal" role="form" action="${ctx }/add" method="post" id="frequencyForm">
 										<input type="hidden" name="triggerType" value="2" />
 										<div class="form-group">
@@ -147,6 +149,7 @@
 							<br />
 							<div class="row">
 								<div class="col-md-8">
+									<!-- 指定时间执行模式 -->
 									<form class="form-horizontal" role="form" action="${ctx }/add" method="post" id="timeForm">
 										<input type="hidden" name="triggerType" value="3" />
 										<div class="form-group">
