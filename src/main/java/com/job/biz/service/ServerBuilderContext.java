@@ -20,7 +20,7 @@ public class ServerBuilderContext {
     private ApplicationContext applicationContext;
 
     public static void addServer(String serverName, Class<? extends DefaultService> clazz) {
-        log.info("##  Add Server for serverName:[{}].", serverName);
+        log.info("##ServerBuilderContext.addServer({} , {})", serverName, clazz);
         servers.put(serverName, clazz);
     }
 
@@ -31,12 +31,12 @@ public class ServerBuilderContext {
     }
 
     public void execute(String serverName) {
-        log.info("# execute");
+        log.info("#ServerBuilderContext.execute({})", serverName);
         DefaultService server = getServer(serverName);
         try {
             server.execute();
         } catch (Exception e) {
-            log.info("# ServerBuilderContext execute error  , [{}]", e.getLocalizedMessage());
+            log.info("#ServerBuilderContext.execute({}) error  , [{}]", serverName, e.getLocalizedMessage());
         }
     }
 

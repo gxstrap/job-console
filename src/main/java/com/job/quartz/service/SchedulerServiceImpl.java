@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.job.biz.mapper.QrtzTriggersMapper;
 import com.job.biz.model.QrtzTriggers;
 import com.job.common.constants.Constants;
@@ -57,7 +58,6 @@ public class SchedulerServiceImpl implements SchedulerService {
         QrtzTriggers qt = new QrtzTriggers();
         qt.setTriggerName(name);
         qt.setTriggerGroup(group);
-        // return quartzDao.getQrtzTriggers();
         return qrtzTriggersMapper.findAll(qt);
     }
 
@@ -77,6 +77,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             schedule(name, group, new CronExpression(cronExpression));
         } catch (ParseException e) {
+            log.error("#schedule name={} , group={} , cronExpression={} , SchedulerException.message={}", name, group, cronExpression, e.getLocalizedMessage());
             throw new IllegalArgumentException(e);
         }
     }
@@ -116,6 +117,7 @@ public class SchedulerServiceImpl implements SchedulerService {
                     scheduler.scheduleJob(trigger);
                 }
             } catch (SchedulerException e) {
+                log.error("#schedule name={} , group={} , cronExpression={} , SchedulerException.message={}", name, group, cronExpression, e.getLocalizedMessage());
                 throw new IllegalArgumentException(e);
             }
         }
@@ -234,6 +236,7 @@ public class SchedulerServiceImpl implements SchedulerService {
                     scheduler.scheduleJob(trigger);
                 }
             } catch (SchedulerException e) {
+                log.error("#schedule name={} , startTimie={} , endTime={} , repeatCount={} , repeatInterval={} , group={} , ParseException.message={}", name, startTime, endTime, repeatCount, repeatInterval, group, e.getLocalizedMessage());
                 throw new IllegalArgumentException(e);
             }
         }
@@ -272,6 +275,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             try {
                 trigger.setStartTime(DateUtils.parseDate(temp, new String[] { "yyyy-MM-dd HH:mm" }));
             } catch (ParseException e) {
+                log.error("#schedule({}) , ParseException.message={}", JSONUtils.toJSONString(map), e.getLocalizedMessage());
                 throw new IllegalArgumentException(e);
             }
         }
@@ -282,6 +286,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             try {
                 trigger.setEndTime(DateUtils.parseDate(temp, new String[] { "yyyy-MM-dd HH:mm" }));
             } catch (ParseException e) {
+                log.error("#schedule({}) , ParseException.message={}", JSONUtils.toJSONString(map), e.getLocalizedMessage());
                 throw new IllegalArgumentException(e);
             }
         }
@@ -306,6 +311,7 @@ public class SchedulerServiceImpl implements SchedulerService {
                 scheduler.scheduleJob(trigger);
             }
         } catch (SchedulerException e) {
+            log.error("#schedule({}) , SchedulerException.message={}", JSONUtils.toJSONString(map), e.getLocalizedMessage());
             throw new IllegalArgumentException(e);
         }
     }
@@ -320,6 +326,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             scheduler.pauseTrigger(new TriggerKey(triggerName, group));// 停止触发器
         } catch (SchedulerException e) {
+            log.error("#pauseTrigger({} , {}) , error message={}", triggerName, group, e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
     }
@@ -334,6 +341,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         try {
             scheduler.resumeTrigger(new TriggerKey(triggerName, group));// 重启触发器
         } catch (SchedulerException e) {
+            log.error("#resumeTrigger({} , {}) , error message={}", triggerName, group, e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
     }
@@ -350,6 +358,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             scheduler.pauseTrigger(triggerKey);// 停止触发器
             return scheduler.unscheduleJob(triggerKey);// 移除触发器
         } catch (SchedulerException e) {
+            log.error("#removeTrigdger({} , {}) , error message={}", triggerName, group, e.getLocalizedMessage());
             throw new RuntimeException(e);
         }
     }
