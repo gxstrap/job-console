@@ -24,7 +24,7 @@ public class InitializeServlet extends HttpServlet {
     public void initialize() {
         SchedulerService schedulerService = ApplicationContextUtil.getBean("schedulerService", SchedulerService.class);
 
-        schedulerService.schedule("退款", "customerService", "0/4 * * ? * * *");
+        schedulerService.schedule("退款", "customerService", "0 0/1 * ? * * *");
     }
 
     public InitializeServlet() {

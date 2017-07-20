@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,9 @@ public class JobProcessController {
 
     private static final Logger log = LoggerFactory.getLogger(JobProcessController.class);
 
+    @Value("#{prop[username]}")
+    private String username;
+
     @Autowired
     public SchedulerService schedulerService;
 
@@ -51,6 +55,9 @@ public class JobProcessController {
         List<QrtzTriggers> results = this.schedulerService.getQrtzTriggers(null, null);
         model.addAttribute("list", results);
         model.addAttribute("servers", ServerBuilderContext.servers.keySet());
+
+        System.err.println("username:"+username);
+        model.addAttribute("username",username);
         return "index";
     }
 

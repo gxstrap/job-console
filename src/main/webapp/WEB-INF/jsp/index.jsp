@@ -35,6 +35,7 @@
 				<span class="sr-only">定时任务系统</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="#">定时任务系统</a>
+			<a class="navbar-brand" href="#">欢迎，${username}</a>
 		</div>
 	</div>
 	</nav>
