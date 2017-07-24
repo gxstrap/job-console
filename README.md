@@ -10,6 +10,6 @@
 	+ 启动工程；
 	+ 浏览器访问工程查看示例效果；</br></br>
 
-欢迎[交流讨论](https://github.com/wangxinforme/job-console/issues)
+[GitHub](https://github.com/wangxinforme) [issues](https://github.com/wangxinforme/job-console/issues)
 
-<b>[胡桃夹子GitHub](https://github.com/wangxinforme "Vincent Git@OSC主页")</b>
+![Markdown](http://wx4.sinaimg.cn/mw690/005OXyHfgy1fh6evxykwhj30ag0as3zv.jpg)
