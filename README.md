@@ -11,5 +11,3 @@
 	+ 浏览器访问工程查看示例效果；</br></br>
 
 [GitHub](https://github.com/wangxinforme) [issues](https://github.com/wangxinforme/job-console/issues)
-
-![Markdown](http://wx4.sinaimg.cn/mw690/005OXyHfgy1fh6evxykwhj30ag0as3zv.jpg)
